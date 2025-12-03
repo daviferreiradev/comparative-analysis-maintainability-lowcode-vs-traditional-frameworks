@@ -16,10 +16,11 @@ Análise Comparativa de Manutenibilidade e Tempo de Resolução de Issues: Plata
 * **v1.0** (21/11/2025): Revisão do plano inicial, definição de hipóteses e escopo de mineração de dados.
 * **v1.1** (25/11/2025): Escopo, Objetivo, Stakeholders/Impacto, Riscos de alto nível, premissas e critérios de sucesso
 * **v1.2** (28/11/2025): Revisão do plano inicial, definição de hipóteses e escopo de mineração de dados.
+* **v1.3** (02/12/2025): População, sujeitos, amostragem, instrumentação, protocolo operacional, plano de análise de dados.
 
 ### 1.4 Datas (criação, última atualização)
 * **Criação:** 21/11/2025
-* **Última atualização:** 28/11/2025
+* **Última atualização:** 02/12/2025
 
 ### 1.5 Autores (nome, área, contato)
 * **Davi José Ferreira:** Estudante de Engenharia de Software - davi.ferreira.1408962@sga.pucminas.br
@@ -453,3 +454,106 @@ Será utilizado um **Desenho Quase-Experimental (Quasi-Experiment)**, especifica
 ### 9.4 Número de grupos e sessões
 *   **Grupos:** 2 grupos independentes (Low-Code e Tradicional).
 *   **Sessões:** Não se aplica a estudo de mineração de dados (coleta única).
+
+---
+
+## 10. População, sujeitos e amostragem
+
+### 10.1 População-alvo
+A população-alvo deste estudo é composta por **Issues de manutenção corretiva (bugs)** e seus respectivos artefatos de resolução (Pull Requests e Commits) em projetos de software Open Source de alta relevância no ecossistema de desenvolvimento web moderno.
+*   **Unidade de Análise:** A "Issue" (relatório de defeito) resolvida.
+
+### 10.2 Critérios de inclusão de sujeitos (Issues/Repositórios)
+Para serem incluídos na amostra, os repositórios e issues devem atender aos seguintes critérios:
+*   **Repositórios:**
+    *   Estar hospedado publicamente no GitHub.
+    *   Possuir mais de 1.000 estrelas (indicativo de relevância e comunidade ativa).
+    *   Ter o inglês como idioma principal de comunicação.
+    *   Pertencer inequivocamente a uma das categorias: Plataforma Low-Code ou Framework Web.
+*   **Issues:**
+    *   Estar no estado `Closed`.
+    *   Possuir label explícita de `bug`, `defect`, `fix` ou similar (conforme mapeamento).
+    *   Ter sido fechada nos últimos 24 meses (janela de relevância temporal).
+
+### 10.3 Critérios de exclusão de sujeitos
+Serão excluídos da análise:
+*   Issues fechadas sem resolução (labels `wontfix`, `duplicate`, `invalid`, `question`).
+*   Issues que não possuem link rastreável para um Commit ou Pull Request (impossibilitando a medição de esforço de código).
+*   Issues criadas e fechadas por bots automatizados (ex: dependabot), pois distorcem o MTTR humano.
+*   Repositórios que não utilizam o Issue Tracking do GitHub (ex: usam Jira externo sem integração visível).
+
+### 10.4 Tamanho da amostra planejado (por grupo)
+*   **Total Planejado:** 2.000 issues válidas.
+*   **Grupo Experimental (Low-Code):** 1.000 issues.
+*   **Grupo Controle (Tradicional):** 1.000 issues.
+*   **Justificativa:** Este tamanho de amostra fornece poder estatístico suficiente (>0.80) para detectar tamanhos de efeito pequenos a médios, considerando a alta variância típica em métricas de engenharia de software.
+
+### 10.5 Método de seleção / recrutamento
+*   **Seleção de Repositórios:** Amostragem Intencional (Purposive Sampling). Os repositórios serão escolhidos manualmente para garantir que representem os líderes de mercado em cada categoria (ex: Appsmith vs React).
+*   **Seleção de Issues:** Mineração automatizada exaustiva dentro da janela de tempo. Caso o volume de dados exceda significativamente a meta (ex: >10.000 issues), será aplicado um algoritmo de **Amostragem Aleatória Simples** para selecionar o subconjunto de análise.
+
+### 10.6 Treinamento e preparação dos sujeitos
+Como este é um estudo de MSR (Mineração de Repositórios) *ex-post-facto*, não há interação com participantes humanos. O "treinamento" refere-se à validação e calibração dos scripts de coleta pelo pesquisador para garantir a consistência dos dados extraídos.
+
+---
+
+## 11. Instrumentação e protocolo operacional
+
+### 11.1 Instrumentos de coleta
+*   **Scripts de Mineração (Python):** Scripts desenvolvidos especificamente para o experimento utilizando a biblioteca `PyGithub`.
+*   **GitHub REST API v3:** Fonte primária dos dados brutos.
+*   **Jupyter Notebooks:** Ambiente para execução da limpeza, processamento e análise estatística dos dados.
+*   **Planilhas/CSV:** Formato de armazenamento intermediário para auditoria manual dos dados coletados.
+
+### 11.2 Materiais de suporte
+*   **Dicionário de Labels:** Um documento mapeando as diferentes tags usadas em cada repositório (ex: `type: bug` no Repo A = `bug` no Repo B) para garantir a normalização.
+*   **Guia de Auditoria:** Protocolo para verificação manual de uma amostra aleatória de 5% dos dados para garantir que os scripts estão capturando as informações corretas (Validação de Ground Truth).
+
+### 11.3 Procedimento experimental (Fluxograma)
+
+O fluxograma abaixo detalha o passo a passo da operacionalização do experimento, desde a seleção até a análise.
+
+![Fluxograma do Procedimento Experimental](assets/fluxograma-procedimento-experimental.png)
+
+**Passo a Passo Detalhado:**
+1.  **Configuração:** Preparação do ambiente Python e tokens de acesso ao GitHub.
+2.  **Mapeamento:** Inspeção manual dos repositórios alvo para identificar quais labels correspondem a bugs.
+3.  **Coleta Bruta:** Execução do script para baixar todas as issues fechadas nos últimos 24 meses.
+4.  **Filtragem:** Aplicação dos critérios de inclusão/exclusão (labels, bots).
+5.  **Enriquecimento:** Para cada issue válida, o script busca o PR ou Commit que a fechou para extrair dados de esforço (linhas alteradas).
+6.  **Sanitização:** Remoção de dados inconsistentes (ex: datas de fechamento anteriores à abertura).
+7.  **Análise:** Execução dos testes estatísticos comparando os grupos.
+
+### 11.4 Plano de piloto
+Será realizado um estudo piloto com **1 repositório de cada grupo** (ex: Appsmith vs React) coletando apenas **50 issues** de cada.
+*   **Objetivo:** Validar se os scripts de coleta estão funcionando corretamente, se o mapeamento de labels é eficaz e se a API do GitHub impõe bloqueios não previstos.
+*   **Ajuste:** Se a taxa de issues sem link para commit for > 50%, o critério de busca de links será refinado (ex: buscar no corpo dos comentários e não apenas nos eventos de fechamento).
+
+---
+
+## 12. Plano de análise de dados (pré-execução)
+
+### 12.1 Estratégia geral de análise
+A análise será comparativa, focada em contrastar as distribuições das métricas entre os dois grupos independentes (Low-Code vs Tradicional). O objetivo é rejeitar ou falhar em rejeitar as hipóteses nulas formuladas na seção 7.
+
+### 12.2 Métodos estatísticos planejados
+Dada a natureza das métricas de engenharia de software (geralmente assimétricas e com cauda longa), a preferência será por métodos não-paramétricos:
+1.  **Estatística Descritiva:**
+    *   Cálculo de Média, Mediana, Desvio Padrão, Mínimo, Máximo, Quartis (25%, 75%).
+    *   Visualização através de **Boxplots** (para ver dispersão e outliers) e **Violin Plots** (para ver densidade).
+2.  **Testes de Hipótese:**
+    *   **Mann-Whitney U Test:** Para comparar as medianas de MTTR e Churn entre os dois grupos (assumindo que os dados não seguem distribuição normal).
+    *   **Cliff’s Delta:** Para medir o tamanho do efeito (magnitude da diferença) de forma não-paramétrica.
+3.  **Correlação (Secundária):**
+    *   **Spearman Rank Correlation:** Para investigar se há correlação entre o tamanho do churn e o tempo de resolução dentro de cada grupo.
+
+### 12.3 Tratamento de dados faltantes e outliers
+*   **Dados Faltantes:** Issues que não possuem data de fechamento ou data de criação válidas serão excluídas. Issues sem dados de commit (churn) serão excluídas apenas das análises de esforço (O2), mas mantidas nas análises de tempo (O1).
+*   **Outliers:**
+    *   Valores extremos (ex: issues abertas por 5 anos) são comuns em software e representam casos reais. Eles **não serão removidos** a menos que sejam erros de dados óbvios (ex: data negativa).
+    *   Para mitigar o impacto de outliers na análise, o foco principal será na **Mediana** e não na Média.
+
+### 12.4 Plano de análise para dados qualitativos
+Embora o estudo seja quantitativo, será realizada uma **análise qualitativa leve** nos outliers extremos (top 5 issues mais demoradas de cada grupo).
+*   **Técnica:** Leitura manual da thread da issue.
+*   **Objetivo:** Identificar categorias de motivos para a demora (ex: "dificuldade técnica", "falta de prioridade", "aguardando reprodução"). Isso ajudará a discutir os resultados e fornecer contexto para os números.
