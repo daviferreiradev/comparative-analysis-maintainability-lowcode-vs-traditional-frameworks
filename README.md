@@ -40,7 +40,7 @@ Este experimento compõe o trabalho final de "Proposta de Experimento para TCC" 
 
 ---
 
-## 2. Contexto e problema
+## 📌 2. Contexto e problema
 
 ### 2.1 Descrição do problema / oportunidade
 
@@ -74,7 +74,7 @@ O desenho experimental fundamenta-se nos seguintes conceitos:
 
 ---
 
-## 3. Objetivos e questões (Goal / Question / Metric)
+## 📌 3. Objetivos e questões (Goal / Question / Metric)
 
 ### 3.1 Objetivo geral (Goal template)
 
@@ -87,7 +87,7 @@ Analisar a **manutenibilidade** (focando em tempo de resolução de issues e esf
 -   **O3:** Avaliar a estabilidade das correções (incidência de reabertura de issues ou regressões).
 -   **O4:** Investigar o engajamento da comunidade no processo de manutenção (dependência do core team).
 
-### 3.3 Questões de pesquisa e 3.4 Métricas associadas (GQM)
+### 📌 3.3 Questões de pesquisa e 3.4 Métricas associadas (GQM)
 
 | Objetivo             | Questão de Pesquisa                                                                                                                | Métricas Associadas                                                       |
 | :------------------- | :--------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------ |
@@ -209,7 +209,7 @@ Analisar a **manutenibilidade** (focando em tempo de resolução de issues e esf
 
 ---
 
-## 7. Modelo conceitual e hipóteses
+## 📌 7. Modelo conceitual e hipóteses
 
 ### 7.1 Modelo conceitual do experimento
 
@@ -306,7 +306,7 @@ Para mitigar vieses, os seguintes critérios são mantidos constantes (controle)
 
 ---
 
-## 9. Desenho experimental
+## 📌 9. Desenho experimental
 
 ### 9.1 Tipo de desenho
 
@@ -331,7 +331,7 @@ Será utilizado um **Desenho Quase-Experimental (Quasi-Experiment)**, especifica
 
 ---
 
-## 10. População, sujeitos e amostragem
+## 📌 10. População, sujeitos e amostragem
 
 ### 10.1 População-alvo
 
@@ -380,7 +380,7 @@ Como este é um estudo de MSR (Mineração de Repositórios) _ex-post-facto_, n�
 
 ---
 
-## 11. Instrumentação e protocolo operacional
+## 📌 11. Instrumentação e protocolo operacional
 
 ### 11.1 Instrumentos de coleta
 
@@ -419,7 +419,7 @@ Será realizado um estudo piloto com **1 repositório de cada grupo** (ex: Appsm
 
 ---
 
-## 12. Plano de análise de dados (pré-execução)
+## 📌 12. Plano de análise de dados (pré-execução)
 
 ### 12.1 Estratégia geral de análise
 
@@ -454,7 +454,7 @@ Embora o estudo seja quantitativo, será realizada uma **análise qualitativa le
 
 ---
 
-## 13. Avaliação de validade (ameaças e mitigação)
+## 📌 13. Avaliação de validade (ameaças e mitigação)
 
 ### 13.1 Validade de conclusão
 
@@ -622,7 +622,7 @@ Embora os dados sejam públicos, medidas de privacidade serão adotadas:
 
 ---
 
-## 16. Cronograma, marcos e riscos operacionais
+## 📌 16. Cronograma, marcos e riscos operacionais
 
 ### 16.1 Macrocronograma (até o início da execução)
 
