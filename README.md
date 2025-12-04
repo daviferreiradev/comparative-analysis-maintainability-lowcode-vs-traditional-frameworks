@@ -557,3 +557,48 @@ Dada a natureza das métricas de engenharia de software (geralmente assimétrica
 Embora o estudo seja quantitativo, será realizada uma **análise qualitativa leve** nos outliers extremos (top 5 issues mais demoradas de cada grupo).
 *   **Técnica:** Leitura manual da thread da issue.
 *   **Objetivo:** Identificar categorias de motivos para a demora (ex: "dificuldade técnica", "falta de prioridade", "aguardando reprodução"). Isso ajudará a discutir os resultados e fornecer contexto para os números.
+
+---
+
+## 13. Avaliação de validade (ameaças e mitigação)
+
+### 13.1 Validade de conclusão
+Refere-se à capacidade de tirar conclusões estatísticas corretas sobre as relações entre as variáveis.
+*   **Baixo Poder Estatístico:** O risco de não detectar um efeito existente.
+    *   *Mitigação:* O tamanho da amostra planejado (N=1.000 por grupo) é suficientemente grande para garantir um poder > 0.80 para tamanhos de efeito pequenos/médios.
+*   **Violação de Suposições de Testes:** O uso de testes paramétricos (como t-test) em dados que não seguem distribuição normal (comum em métricas de tempo).
+    *   *Mitigação:* Uso planejado de testes não-paramétricos (Mann-Whitney U) e estatísticas robustas (Mediana, Cliff's Delta) que não assumem normalidade.
+*   **Confiabilidade das Medidas:** Erros nos scripts de coleta podem gerar dados ruidosos.
+    *   *Mitigação:* Validação manual (auditoria) de uma subamostra aleatória (5%) para garantir que o script está extraindo o "tempo de resolução" e "churn" corretamente.
+
+### 13.2 Validade interna
+Refere-se à certeza de que o fator de tratamento (Low-Code vs Tradicional) causou o efeito observado, e não outros fatores.
+*   **Viés de Seleção (Selection Bias):** Os repositórios escolhidos podem ter processos de manutenção naturalmente diferentes (ex: um projeto pode ser mais rigoroso com Code Review, demorando mais).
+    *   *Mitigação:* Seleção de projetos maduros (>10k stars) em ambos os grupos para tentar equalizar o nível de maturidade do processo.
+*   **Variáveis de Confusão (Confounding):** O tamanho da comunidade pode influenciar o tempo de resposta. Projetos como React têm milhares de olhos, enquanto Low-Code tem menos.
+    *   *Mitigação:* Monitorar a métrica "Time to First Response" (O4) para distinguir se a demora é por falta de gente (comunidade) ou dificuldade técnica (manutenibilidade).
+*   **História (History):** Eventos externos durante a janela de 24 meses (ex: lançamento de uma versão major bugada) podem distorcer a média.
+    *   *Mitigação:* A janela de tempo longa (2 anos) e a análise de múltiplos repositórios ajudam a diluir o impacto de eventos pontuais.
+
+### 13.3 Validade de constructo
+Refere-se à adequação das métricas operacionais para representar os conceitos teóricos.
+*   **Mono-operation Bias:** Usar apenas "Tempo de Resolução" como proxy único para "Manutenibilidade". O tempo pode ser afetado por burocracia, não apenas pela dificuldade do código.
+    *   *Mitigação:* Triangulação com métricas de esforço (Code Churn, Files Changed) e taxa de reabertura (Reopen Rate) para ter uma visão multidimensional da dificuldade de manutenção.
+*   **Definição do Constructo "Bug":** O que é considerado bug pode variar entre projetos (alguns usam label `bug` para melhorias pequenas).
+    *   *Mitigação:* Mapeamento manual rigoroso das labels de cada repositório e exclusão de labels ambíguas.
+
+### 13.4 Validade externa
+Refere-se à capacidade de generalizar os resultados para outros contextos.
+*   **Generalização para Low-Code Proprietário:** O estudo foca em Low-Code *Open Source*. Os resultados podem não se aplicar a ferramentas fechadas (Mendix, OutSystems) que têm arquiteturas diferentes.
+    *   *Mitigação:* Deixar claro no relatório que as conclusões se limitam ao ecossistema Open Source e arquiteturas transparentes.
+*   **Generalização para outras linguagens:** O estudo foca no ecossistema JavaScript/TypeScript.
+    *   *Mitigação:* Reconhecer esta limitação; resultados podem variar para plataformas baseadas em Java ou .NET.
+
+### 13.5 Resumo das principais ameaças e estratégias de mitigação
+
+| Tipo de Validade | Ameaça Principal | Estratégia de Mitigação |
+| :--- | :--- | :--- |
+| **Conclusão** | Distribuição não-normal dos dados de tempo. | Uso de testes estatísticos não-paramétricos (Mann-Whitney U). |
+| **Interna** | Diferença no tamanho da comunidade (fator de confusão). | Controle via métrica "Time to First Response" e seleção de projetos populares. |
+| **Constructo** | "Tempo" incluir burocracia e não só dificuldade técnica. | Triangulação com métricas de código (Churn, Files Changed). |
+| **Externa** | Resultados restritos ao Open Source. | Delimitação explícita do escopo e sugestão de trabalhos futuros para ferramentas proprietárias. |
