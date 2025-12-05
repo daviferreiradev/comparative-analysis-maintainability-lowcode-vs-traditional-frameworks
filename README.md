@@ -314,10 +314,15 @@ Será utilizado um **Desenho Quase-Experimental (Quasi-Experiment)**, especifica
 
 -   **Justificativa:** Não é possível randomizar bugs para serem "Low-Code" ou "Tradicionais", nem randomizar desenvolvedores. Analisamos dados históricos que já ocorreram.
 
-### 📌 9.2 Randomization e alocação
+### 9.2 Randomization e alocação
 
 -   **Seleção de Repositórios:** Seleção intencional (Purposive Sampling) baseada em critérios de popularidade e relevância para garantir comparabilidade.
--   **Seleção de Issues:** Será feita uma coleta exaustiva (todos os dados disponíveis) dentro da janela de tempo definida (últimos 2 anos). Se o volume for excessivo (>100k), será aplicada uma **Amostragem Aleatória Simples** para selecionar 1.000 issues de cada grupo.
+-   **Seleção de Issues (Processo em duas etapas):**
+    1.  **Coleta Exaustiva:** Mineração de **TODAS as issues fechadas** classificadas como bugs nos últimos 24 meses (janela temporal: Jan/2024 - Dez/2025).
+    2.  **Subamostragem Condicional:**
+        -   Se **N ≤ 1.000** por grupo: Utilizar todas as issues coletadas.
+        -   Se **1.000 < N ≤ 100.000** total: Utilizar todas as issues coletadas (máximo de ~50k por grupo).
+        -   Se **N > 100.000** total: Aplicar **Amostragem Aleatória Simples** para selecionar 1.000 issues por grupo, estratificada por repositório.
 
 ### 9.3 Balanceamento e contrabalanço
 
@@ -364,15 +369,22 @@ Serão excluídos da análise:
 
 ### 10.4 Tamanho da amostra planejado (por grupo)
 
--   **Total Planejado:** 2.000 issues válidas.
--   **Grupo Experimental (Low-Code):** 1.000 issues.
--   **Grupo Controle (Tradicional):** 1.000 issues.
--   **Justificativa:** Este tamanho de amostra fornece poder estatístico suficiente (>0.80) para detectar tamanhos de efeito pequenos a médios, considerando a alta variância típica em métricas de engenharia de software.
+-   **Meta Mínima:** 1.000 issues válidas por grupo (2.000 total).
+-   **Meta Ideal:** Todas as issues disponíveis nos últimos 24 meses, até o limite de 50.000 por grupo.
+-   **Estratégia:**
+    -   **Cenário 1 (Baixo volume):** Se houver < 1.000 issues por grupo → Usar todas disponíveis e revisar viabilidade.
+    -   **Cenário 2 (Volume adequado):** Se houver 1.000 a 50.000 issues por grupo → Usar todas (análise full-scale).
+    -   **Cenário 3 (Volume excessivo):** Se houver > 100.000 issues total → Subamostragem aleatória para 1.000 por grupo.
+-   **Justificativa:** O tamanho mínimo de 1.000 issues por grupo fornece poder estatístico suficiente (>0.80) para detectar tamanhos de efeito pequenos a médios. Amostras maiores aumentam a sensibilidade e reduzem o erro padrão.
 
 ### 10.5 Método de seleção / recrutamento
 
 -   **Seleção de Repositórios:** Amostragem Intencional (Purposive Sampling). Os repositórios serão escolhidos manualmente para garantir que representem os líderes de mercado em cada categoria.
--   **Seleção de Issues:** Mineração automatizada exaustiva dentro da janela de tempo. Caso o volume de dados exceda significativamente a meta (ex: >10.000 issues), será aplicado um algoritmo de **Amostragem Aleatória Simples** para selecionar o subconjunto de análise.
+-   **Seleção de Issues:**
+    -   **Fase 1 - Coleta Total:** Mineração automatizada **exaustiva** de todas as issues fechadas classificadas como bugs dentro da janela temporal de 24 meses (usando filtros da API do GitHub: `is:issue is:closed label:bug closed:2024-01-01..2025-12-31`).
+    -   **Fase 2 - Decisão de Amostragem:** Após coleta, avaliar o volume total:
+        -   **Usar tudo** se N < 100.000 total (ideal para maximizar poder estatístico).
+        -   **Aplicar amostragem aleatória estratificada** se N > 100.000 total, selecionando 1.000 issues por grupo proporcionalmente distribuídas entre os 3 repositórios de cada categoria.
 
 ### 10.6 Repositórios-alvo selecionados
 
