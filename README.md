@@ -128,9 +128,9 @@ Analisar a **manutenibilidade** (focando em tempo de resolução de issues e esf
 
 ---
 
-## 4. Escopo e contexto do experimento
+## 📌 4. Escopo e contexto do experimento
 
-### 4.1 Escopo funcional / de processo (incluído e excluído)
+### 📌 4.1 Escopo funcional / de processo (incluído e excluído)
 
 -   **Incluído:**
     -   Análise de issues fechadas e commits associados (via link na issue) em repositórios públicos do GitHub.
@@ -147,13 +147,13 @@ Analisar a **manutenibilidade** (focando em tempo de resolução de issues e esf
 -   **Tipo de Projeto:** Ferramentas de desenvolvimento de software (Developer Tools), caracterizadas por alta complexidade técnica.
 -   **Perfil de Experiência:** Desenvolvedores profissionais, mantenedores core e contribuidores open source distribuídos globalmente.
 
-### 4.3 Premissas
+### 📌 4.3 Premissas
 
 -   As issues estão corretamente etiquetadas (labels como `bug`, `fix`, `type:bug`) nos repositórios selecionados, permitindo a filtragem automática.
 -   O link entre issues e Pull Requests/Commits é rastreável na maioria dos casos (via "Closing keywords" do GitHub).
 -   A API do GitHub permanecerá estável e acessível durante o período de coleta de dados.
 
-### 4.4 Restrições
+### 📌 4.4 Restrições
 
 -   **Limitação de API:** O GitHub impõe um limite de 5.000 requisições por hora para usuários autenticados, o que pode prolongar o tempo de coleta.
 -   **Tempo:** O experimento deve ser concluído dentro do semestre letivo.
@@ -166,9 +166,9 @@ Analisar a **manutenibilidade** (focando em tempo de resolução de issues e esf
 
 ---
 
-## 5. Stakeholders e impacto esperado
+## 📌 5. Stakeholders e impacto esperado
 
-### 5.1 Stakeholders principais
+### 📌 5.1 Stakeholders principais
 
 -   **CTOs e Decisores de Tecnologia:** Responsáveis pela escolha de stack tecnológica em empresas.
 -   **Arquitetos de Software:** Interessados na manutenibilidade arquitetural e dívida técnica de longo prazo.
@@ -188,7 +188,7 @@ Analisar a **manutenibilidade** (focando em tempo de resolução de issues e esf
 
 ---
 
-## 6. Riscos de alto nível, premissas e critérios de sucesso
+## 📌 6. Riscos de alto nível, premissas e critérios de sucesso
 
 ### 6.1 Riscos de alto nível (negócio, técnicos, etc.)
 
@@ -201,7 +201,7 @@ Analisar a **manutenibilidade** (focando em tempo de resolução de issues e esf
 
 -   Coleta de pelo menos **1.000 issues válidas** (classificadas como bug e fechadas) de cada grupo (Low-Code vs Tradicional).
 -   Capacidade de responder a pelo menos **80% das Questões de Pesquisa** com significância estatística (p-value < 0.05).
--   Identificação de pelo menos **3 repositórios comparáveis** em cada categoria.
+-   Análise de **3 repositórios Low-Code** e **3 repositórios Tradicionais** (total de 6 repositórios).
 
 ### 6.3 Critérios de parada antecipada (pré-execução)
 
@@ -242,7 +242,7 @@ O modelo conceitual baseia-se na premissa de que a **Complexidade Acidental** in
 
 ---
 
-## 8. Variáveis, fatores, tratamentos e objetos de estudo
+## 📌 8. Variáveis, fatores, tratamentos e objetos de estudo
 
 ### 8.1 Objetos de estudo
 
@@ -252,7 +252,7 @@ Os objetos de estudo são as **Issues** (classificadas como bugs) fechadas nos r
 
 Neste estudo de Mineração de Repositórios de Software (MSR), não há recrutamento direto de participantes humanos. Os "sujeitos" indiretos são os desenvolvedores (core team e contribuidores) que atuaram na resolução das issues analisadas.
 
-### 8.3 Variáveis independentes (fatores) e seus níveis
+### 📌 8.3 Variáveis independentes (fatores) e seus níveis
 
 -   **Fator Principal:** Tipo de Plataforma de Desenvolvimento.
 -   **Níveis:**
@@ -264,7 +264,7 @@ Neste estudo de Mineração de Repositórios de Software (MSR), não há recruta
 -   **Tratamento A (Grupo Experimental):** Conjunto de issues extraídas de repositórios Low-Code (e.g., Appsmith, ToolJet).
 -   **Tratamento B (Grupo Controle/Comparação):** Conjunto de issues extraídas de repositórios de Frameworks Tradicionais (e.g., React, Vue).
 
-### 8.5 Variáveis dependentes (respostas)
+### 📌 8.5 Variáveis dependentes (respostas)
 
 As variáveis dependentes são as métricas definidas na seção GQM, focando em:
 
@@ -314,14 +314,14 @@ Será utilizado um **Desenho Quase-Experimental (Quasi-Experiment)**, especifica
 
 -   **Justificativa:** Não é possível randomizar bugs para serem "Low-Code" ou "Tradicionais", nem randomizar desenvolvedores. Analisamos dados históricos que já ocorreram.
 
-### 9.2 Randomization e alocação
+### 📌 9.2 Randomization e alocação
 
 -   **Seleção de Repositórios:** Seleção intencional (Purposive Sampling) baseada em critérios de popularidade e relevância para garantir comparabilidade.
 -   **Seleção de Issues:** Será feita uma coleta exaustiva (todos os dados disponíveis) dentro da janela de tempo definida (últimos 2 anos). Se o volume for excessivo (>100k), será aplicada uma **Amostragem Aleatória Simples** para selecionar 1.000 issues de cada grupo.
 
 ### 9.3 Balanceamento e contrabalanço
 
--   **Balanceamento:** O número de repositórios em cada grupo será igual (ex: 3 vs 3) ou próximo. Buscaremos balancear o tamanho da amostra final (N=1000 para cada lado) através de subamostragem se um grupo for muito maior que o outro.
+-   **Balanceamento:** Serão analisados **3 repositórios Low-Code** e **3 repositórios Tradicionais** (total: 6 repositórios). Buscaremos balancear o tamanho da amostra final (N=1000 para cada lado) através de subamostragem se um grupo for muito maior que o outro.
 -   **Contrabalanço:** Não se aplica, pois não há sessões repetidas com os mesmos sujeitos realizando tarefas em ordens diferentes.
 
 ### 9.4 Número de grupos e sessões
@@ -333,13 +333,13 @@ Será utilizado um **Desenho Quase-Experimental (Quasi-Experiment)**, especifica
 
 ## 📌 10. População, sujeitos e amostragem
 
-### 10.1 População-alvo
+### 📌 10.1 População-alvo
 
 A população-alvo deste estudo é composta por **Issues de manutenção corretiva (bugs)** e seus respectivos artefatos de resolução (Pull Requests e Commits) em projetos de software Open Source de alta relevância no ecossistema de desenvolvimento web moderno.
 
 -   **Unidade de Análise:** A "Issue" (relatório de defeito) resolvida.
 
-### 10.2 Critérios de inclusão de sujeitos (Issues/Repositórios)
+### 📌 10.2 Critérios de inclusão de sujeitos (Issues/Repositórios)
 
 Para serem incluídos na amostra, os repositórios e issues devem atender aos seguintes critérios:
 
@@ -371,10 +371,31 @@ Serão excluídos da análise:
 
 ### 10.5 Método de seleção / recrutamento
 
--   **Seleção de Repositórios:** Amostragem Intencional (Purposive Sampling). Os repositórios serão escolhidos manualmente para garantir que representem os líderes de mercado em cada categoria (ex: Appsmith vs React).
+-   **Seleção de Repositórios:** Amostragem Intencional (Purposive Sampling). Os repositórios serão escolhidos manualmente para garantir que representem os líderes de mercado em cada categoria.
 -   **Seleção de Issues:** Mineração automatizada exaustiva dentro da janela de tempo. Caso o volume de dados exceda significativamente a meta (ex: >10.000 issues), será aplicado um algoritmo de **Amostragem Aleatória Simples** para selecionar o subconjunto de análise.
 
-### 10.6 Treinamento e preparação dos sujeitos
+### 10.6 Repositórios-alvo selecionados
+
+**Plataformas Low-Code Open Source (3 repositórios):**
+
+1. **Appsmith** (`appsmithorg/appsmith`) - >30k stars
+2. **Budibase** (`Budibase/budibase`) - >20k stars
+3. **ToolJet** (`ToolJet/ToolJet`) - >25k stars
+
+**Frameworks Web Tradicionais (3 repositórios):**
+
+1. **React** (`facebook/react`) - >220k stars
+2. **Vue.js** (`vuejs/core`) - >45k stars
+3. **NestJS** (`nestjs/nest`) - >65k stars
+
+**Justificativa da Seleção:**
+
+-   Todos os repositórios possuem mais de 10.000 estrelas, garantindo maturidade e relevância.
+-   Pertencem ao ecossistema JavaScript/TypeScript, mantendo a linguagem como variável de controle.
+-   Representam líderes de mercado em suas respectivas categorias.
+-   Possuem processos estabelecidos de Issue Tracking no GitHub.
+
+### 10.7 Treinamento e preparação dos sujeitos
 
 Como este é um estudo de MSR (Mineração de Repositórios) _ex-post-facto_, não há interação com participantes humanos. O "treinamento" refere-se à validação e calibração dos scripts de coleta pelo pesquisador para garantir a consistência dos dados extraídos.
 
@@ -394,7 +415,7 @@ Como este é um estudo de MSR (Mineração de Repositórios) _ex-post-facto_, n�
 -   **Dicionário de Labels:** Um documento mapeando as diferentes tags usadas em cada repositório (ex: `type: bug` no Repo A = `bug` no Repo B) para garantir a normalização.
 -   **Guia de Auditoria:** Protocolo para verificação manual de uma amostra aleatória de 5% dos dados para garantir que os scripts estão capturando as informações corretas (Validação de Ground Truth).
 
-### 11.3 Procedimento experimental (Fluxograma)
+### 📌 11.3 Procedimento experimental (Fluxograma)
 
 O fluxograma abaixo detalha o passo a passo da operacionalização do experimento, desde a seleção até a análise.
 
@@ -622,7 +643,7 @@ Embora os dados sejam públicos, medidas de privacidade serão adotadas:
 
 ---
 
-## 📌 16. Cronograma, marcos e riscos operacionais
+## 16. Cronograma, marcos e riscos operacionais
 
 ### 16.1 Macrocronograma (até o início da execução)
 
